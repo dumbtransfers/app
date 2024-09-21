@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "dumbtransfers-app",
-    "slug": "dumbtransfers-app",
+    "name": "DumbTransfers-app",
+    "slug": "umbtransfers-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lausuarez02.dumbtransfers-app"
     },
     "android": {
       "adaptiveIcon": {
