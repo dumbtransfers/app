@@ -11,6 +11,7 @@ export default function AppLayout() {
         }}
       >
         <Stack.Screen name="index" />
+        <Stack.Screen name="chat" />
         {/* Add other screens here if needed */}
       </Stack>
     </View>
