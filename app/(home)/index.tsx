@@ -69,10 +69,15 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { Bell, MoreHorizontal, MoreVertical,ArrowRight } from 'lucide-react-native';
+import { router } from 'expo-router';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView style={styles.container}>
+<ThemedView darkColor='#252222' style={{flex:1}} >
+  <View style={styles.container}>
       <View style={styles.header}>
         <Image
           source={require('../../assets/images/lautaro.jpg')}
@@ -88,17 +93,17 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <View style={styles.balanceContainer}>
-        <Text style={styles.balanceAmount}>$1,000</Text>
-        <Text style={styles.balanceText}>Current Balance</Text>
-      </View>
+      <ThemedView darkColor='#252222' style={styles.balanceContainer}>
+        <ThemedText lightColor='#4D49FC'  darkColor='' type="title">$256</ThemedText>
+        <ThemedText lightColor='#4D49FC' darkColor='' style={styles.balanceText}>Current Balance</ThemedText>
+      </ThemedView>
 
       <TouchableOpacity style={styles.topUpButton}>
         <Text style={styles.topUpButtonText}>Top Up</Text>
       </TouchableOpacity>
       <View style={styles.secondContainer}>
-        <Text style={styles.subTitle}>Asistentes</Text>
-        <View style={styles.box}>
+        <ThemedText lightColor='#4D49FC' style={styles.subTitle} type="title">Asistentes</ThemedText>
+        <TouchableOpacity onPress={() => router.push('/chat')} style={styles.box}>
         <View style={styles.boxContent}>
           <View style={styles.boxHeader}>
             <Image
@@ -108,21 +113,25 @@ const HomeScreen = () => {
             <Text style={styles.boxName}>Sofia</Text>
             <ArrowRight size={44} color="#FFFFFF" style={styles.arrowIcon} />
           </View>
-          <Text style={styles.chatText}>Chat with me</Text>
+          <View style={{ width: 200 }}>
+          <Text style={styles.chatText}>
+            Help with General transactions
+          </Text>
+        </View>
         </View>
         <Text style={styles.boxAmount}>$12</Text>
+      </TouchableOpacity>
       </View>
       </View>
-    </SafeAreaView>
-  );
+      </ThemedView>
+    );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
-    marginRight:15,
-    marginLeft:15
+    marginRight:10,
+    marginLeft:10
   },
   secondContainer:{
     // flex: 1,
@@ -135,6 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop:30
   },
   profileImage: {
     width: 40,
@@ -148,7 +158,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#4D49FC',
+    backgroundColor: '#2C40F0',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,
@@ -160,14 +170,20 @@ const styles = StyleSheet.create({
   balanceAmount: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#4D49FC',
+    // color: '#4D49FC',
+  },
+  subTitle: {
+    // fontSize: 28,
+    fontWeight: '400',
+    fontSize: 28,
+    // color: '#4D49FC',
   },
   balanceText: {
     fontSize: 16,
-    color: '#4D49FC',
+    // color: '#4D49FC',
   },
   topUpButton: {
-    backgroundColor: '#4D49FC',
+    backgroundColor: '#2C40F0',
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -180,18 +196,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  subTitle:{
-    fontSize: 28,
-    // fontWeight: 'bold',
-    color: '#4D49FC',
-  },
   box: {
     flex: 1,
     marginTop:20,
-    backgroundColor: '#4D49FC',
+    backgroundColor: '#2C40F0',
     borderRadius: 30,
     justifyContent: 'space-between',
-    minHeight:200,
+    minHeight:220,
     padding: 20,
     // marginRight:15,
     // marginLeft:15
@@ -211,7 +222,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   boxName: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     color:'white',
     flex: 1,
@@ -220,14 +231,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   chatText: {
-    fontSize: 14,
+    marginTop:10,
+    fontSize: 20,
     color: '#FFFFFF',
   },
   boxAmount: {
     fontSize: 24,
     fontWeight: 'bold',
     alignSelf: 'flex-end',
-    color:'white'
+    color:'white',
+    marginBottom:10
   },
 });
 
