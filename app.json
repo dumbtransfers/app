@@ -14,12 +14,16 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.lausuarez02.dumbtransfers-app"
+      "bundleIdentifier": "com.lausuarez02.dumbtransfers-app",
+      "runtimeVersion": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "runtimeVersion": {
+        "policy": "appVersion"
       }
     },
     "web": {
@@ -32,6 +36,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "09ffc412-b30d-4a73-90f1-57099d7f27dd"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/09ffc412-b30d-4a73-90f1-57099d7f27dd"
     }
   }
 }

@@ -16,7 +16,8 @@ const ChatScreen = () => {
 
   const handleAiAssistant = async (value: string) => {
     try {
-      const response = await fetch('https://coinbase-main-server.onrender.com/api/v1/assistant', {
+      // const response = await fetch('https://coinbase-main-server.onrender.com/api/v1/assistant', {
+        const response = await fetch('http://localhost:3025/api/v1/assistant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
