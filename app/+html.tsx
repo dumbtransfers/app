@@ -1,5 +1,15 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import { type PropsWithChildren } from 'react';
+import './globals'
+
+// if (typeof global.TextEncoder === 'undefined') {
+//   global.TextEncoder = require('fast-text-encoding').TextEncoder;
+// }
+
+// if (typeof global.TextDecoder === 'undefined') {
+//   global.TextDecoder = require('fast-text-encoding').TextDecoder;
+// }
+
 
 /**
  * This file is web-only and used to configure the root HTML for every web page during static rendering.
