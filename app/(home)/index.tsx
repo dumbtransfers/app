@@ -1,80 +1,68 @@
-// import { Image, StyleSheet, Platform, SafeAreaView } from 'react-native';
-
-// import { HelloWave } from '@/components/HelloWave';
-// import ParallaxScrollView from '@/components/ParallaxScrollView';
-// import { ThemedText } from '@/components/ThemedText';
-// import { ThemedView } from '@/components/ThemedView';
-
-// export default function HomeScreen() {
-//   return (
-//     <SafeAreaView
-//       // style={{ light: '#A1CEDC', dark: '#1D3D47' }}
-// >
-//       <ThemedView style={styles.titleContainer}>
-//         <ThemedText type="title">$12</ThemedText>
-//         <HelloWave />
-//       </ThemedView>
-//       <ThemedView style={styles.stepContainer}>
-//         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-//         <ThemedText>
-//           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-//           Press{' '}
-//           <ThemedText type="defaultSemiBold">
-//             {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-//           </ThemedText>{' '}
-//           to open developer tools.
-//         </ThemedText>
-//       </ThemedView>
-//       <ThemedView style={styles.stepContainer}>
-//         <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-//         <ThemedText>
-//           Tap the Explore tab to learn more about what's included in this starter app.
-//         </ThemedText>
-//       </ThemedView>
-//       <ThemedView style={styles.stepContainer}>
-//         <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-//         <ThemedText>
-//           When you're ready, run{' '}
-//           <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-//           <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-//           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-//           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-//         </ThemedText>
-//       </ThemedView>
-//     </SafeAreaView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   titleContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     gap: 8,
-//   },
-//   stepContainer: {
-//     gap: 8,
-//     marginBottom: 8,
-//   },
-//   reactLogo: {
-//     height: 178,
-//     width: 290,
-//     bottom: 0,
-//     left: 0,
-//     position: 'absolute',
-//   },
-// });
-
-
-
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { Bell, MoreHorizontal, MoreVertical,ArrowRight } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import LoadingSpinner from '@/components/Loading';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { useAccount, useBalance } from 'wagmi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
+  const [mpcWallet, setMpcWallet] = useState('')
+  const { address } = useAccount(); // Directly destructuring address from useAccount
+  const chainId = 8453; // Base network chain ID
+  const usdcContractAddress = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+
+  const { data, isError, isLoading } = useBalance({
+    address, // User's wallet address
+    token: usdcContractAddress, // USDC token contract address
+    chainId,
+  });
+  const asyncDataStorage = async(mpcWallet:any) => {
+    await AsyncStorage.multiSet([
+        ['mpcWallet', mpcWallet],
+      ]);
+} 
+ 
+const registerUserWallet = async (address: any) => {
+  try {
+    const response = await fetch('https://coinbase-main-server.onrender.com/api/v1/wallet/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ metamaskAddress: address }),
+    });
+
+    const data = await response.json();
+    console.log('Response data:', data);
+
+    if (data?.message === 'User already registered with a wallet') {
+      console.log('User already registered:', data);
+      const walletId = data.user?.mpcWalletAddress?.id;
+      if (walletId) {
+        setMpcWallet(walletId);
+        asyncDataStorage(walletId);
+      }
+    } else {
+      console.log('New user registered:', data);
+      const walletId = data.user?.mpcWalletAddress?.id;
+      if (walletId) {
+        setMpcWallet(walletId);
+      }
+    }
+  } catch (error) {
+    console.error('Error registering wallet:', error);
+  }
+};
+
+  useEffect(() => {
+    if(address){
+      registerUserWallet(address)
+    }
+  },[address])
   return (
 <ThemedView darkColor='#252222' style={{flex:1}} >
   <View style={styles.container}>
@@ -94,7 +82,7 @@ const HomeScreen = () => {
       </View>
 
       <ThemedView darkColor='#252222' style={styles.balanceContainer}>
-        <ThemedText lightColor='#4D49FC'  darkColor='' type="title">$256</ThemedText>
+        <ThemedText lightColor='#4D49FC'  darkColor='' type="title">{isLoading ? <LoadingSpinner/> : ( data?.formatted, data?.symbol)}</ThemedText>
         <ThemedText lightColor='#4D49FC' darkColor='' style={styles.balanceText}>Current Balance</ThemedText>
       </ThemedView>
 

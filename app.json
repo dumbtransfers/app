@@ -13,6 +13,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "metamask",
+          "trust",
+          "safe",
+          "rainbow",
+          "uniswap"
+        ]
+      },
       "supportsTablet": true,
       "bundleIdentifier": "com.lausuarez02.dumbtransfers-app",
       "runtimeVersion": "1.0.0"

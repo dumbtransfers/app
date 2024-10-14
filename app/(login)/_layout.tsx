@@ -1,17 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Stack } from 'expo-router';
-import 'text-encoding'
-
-if (typeof global.TextEncoder === 'undefined') {
-  global.TextEncoder = require('text-encoding').TextEncoder;
-}
-
-if (typeof global.TextDecoder === 'undefined') {
-  global.TextDecoder = require('text-encoding').TextDecoder;
-}
-
-
 
 export default function AppLayout() {
   return (
@@ -22,7 +11,7 @@ export default function AppLayout() {
         }}
       >
         <Stack.Screen name="index" />
-        <Stack.Screen name="chat" />
+        <Stack.Screen name="loginOptions" />
         {/* Add other screens here if needed */}
       </Stack>
     </View>
