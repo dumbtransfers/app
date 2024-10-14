@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, useColorScheme } from 'react-native';
 import { ArrowLeft, SendHorizontal } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import ChatComponent from '@/components/ChatComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ChatScreen = () => {
   const [messages, setMessages] = useState<any>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  let mpcWallet:any;
+  let address:any;
 
+  useEffect(() => {
+    mpcWallet = AsyncStorage.getItem('mpcWallet');
+    address = AsyncStorage.getItem('walletAddress');
+  },[])
   const theme = useColorScheme() ?? 'light';
   console.log(theme, "check the theme dude")
 
@@ -22,7 +29,7 @@ const ChatScreen = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: value }), // Send the message in the body
+        body: JSON.stringify({ message: value, mpcWallet, address }), // Send the message in the body
       });
   
       // Check the content type of the response
