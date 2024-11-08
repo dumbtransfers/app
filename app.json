@@ -33,7 +33,8 @@
       },
       "runtimeVersion": {
         "policy": "appVersion"
-      }
+      },
+      "package": "com.lausuarez02.umbtransfersapp"
     },
     "web": {
       "bundler": "metro",
