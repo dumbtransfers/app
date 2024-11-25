@@ -1,13 +1,21 @@
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = () => {
+  const [authError, setAuthError] = useState<string | null>(null);
 
-  // Trigger login functionality
-  const handleNavigation = () => {
-    // Your login logic here
-    router.push('/loginOptions')
+  const handleNavigation = async () => {
+    try {
+      // Store auth status without Lit Protocol for now
+      await AsyncStorage.setItem('isInitialized', 'true');
+      // Navigate to login options
+      router.push('/loginOptions');
+    } catch (error) {
+      console.error('Navigation failed:', error);
+      setAuthError('Failed to proceed to login');
+    }
   };
 
   return (

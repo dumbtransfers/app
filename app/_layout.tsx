@@ -75,7 +75,11 @@ export default function RootLayout() {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
+          <Stack
+                  screenOptions={{
+                    headerShown: false,
+                  }}
+          >
             <Stack.Screen
               name={isAuthenticated ? '(home)' : '(login)'}
               options={{ headerShown: false }}

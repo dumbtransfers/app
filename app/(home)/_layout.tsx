@@ -23,6 +23,7 @@ export default function AppLayout() {
       >
         <Stack.Screen name="index" />
         <Stack.Screen name="chat" />
+        <Stack.Screen name="marketplace" />
         {/* Add other screens here if needed */}
       </Stack>
     </View>

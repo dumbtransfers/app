@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { Bell, MoreHorizontal, MoreVertical,ArrowRight } from 'lucide-react-native';
+import { Bell, MoreHorizontal, MoreVertical,ArrowRight, Store } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -8,6 +8,7 @@ import LoadingSpinner from '@/components/Loading';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { useAccount, useBalance } from 'wagmi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AssistantCardContainer from  '@/components/AssistantCardContainer'
 
 const HomeScreen = () => {
   const [mpcWallet, setMpcWallet] = useState('')
@@ -72,9 +73,9 @@ const registerUserWallet = async (address: any) => {
           style={styles.profileImage}
         />
         <View style={styles.iconContainer}>
-          <View style={styles.iconWrapper}>
-            <Bell size={24} color="#FFFFFF" />
-          </View>
+          <TouchableOpacity style={styles.iconWrapper} onPress={() => router.push('/marketplace')}>
+            <Store size={24} color="#FFFFFF" />
+          </TouchableOpacity>
           <View style={styles.iconWrapper}>
             <MoreHorizontal size={24} color="#FFFFFF" />
           </View>
@@ -82,14 +83,16 @@ const registerUserWallet = async (address: any) => {
       </View>
 
       <ThemedView darkColor='#252222' style={styles.balanceContainer}>
-        <ThemedText lightColor='#4D49FC'  darkColor='' type="title">{isLoading ? <LoadingSpinner/> : ( data?.formatted, data?.symbol)}</ThemedText>
+        {/* <ThemedText lightColor='#4D49FC'  darkColor='black' type="title" >{isLoading ? <LoadingSpinner/> : ( data?.formatted, data?.symbol)}</ThemedText> */}
+        <ThemedText lightColor='#4D49FC'  darkColor='black' type="title" >$200</ThemedText>
         <ThemedText lightColor='#4D49FC' darkColor='' style={styles.balanceText}>Current Balance</ThemedText>
       </ThemedView>
 
       <TouchableOpacity style={styles.topUpButton}>
         <Text style={styles.topUpButtonText}>Top Up</Text>
       </TouchableOpacity>
-      <View style={styles.secondContainer}>
+      <AssistantCardContainer/>
+      {/* <View style={styles.secondContainer}>
         <ThemedText lightColor='#4D49FC' style={styles.subTitle} type="title">Asistentes</ThemedText>
         <TouchableOpacity onPress={() => router.push('/chat')} style={styles.box}>
         <View style={styles.boxContent}>
@@ -109,7 +112,7 @@ const registerUserWallet = async (address: any) => {
         </View>
         <Text style={styles.boxAmount}>$12</Text>
       </TouchableOpacity>
-      </View>
+      </View> */}
       </View>
       </ThemedView>
     );

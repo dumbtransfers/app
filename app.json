@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DumbTransfers-app",
-    "slug": "umbtransfers-app",
+    "name": "WAPU",
+    "slug": "wapu",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -24,7 +24,8 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "com.lausuarez02.dumbtransfers-app",
-      "runtimeVersion": "1.0.0"
+      "runtimeVersion": "1.0.0",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,7 +34,8 @@
       },
       "runtimeVersion": {
         "policy": "appVersion"
-      }
+      },
+      "package": "com.lausuarez02.umbtransfersapp"
     },
     "web": {
       "bundler": "metro",
@@ -47,12 +49,13 @@
       "typedRoutes": true
     },
     "extra": {
+      "router": {
+        "origin": false
+      },
       "eas": {
-        "projectId": "09ffc412-b30d-4a73-90f1-57099d7f27dd"
+        "projectId": "2f33e73a-89f9-4695-be4d-6e60835021de"
       }
     },
-    "updates": {
-      "url": "https://u.expo.dev/09ffc412-b30d-4a73-90f1-57099d7f27dd"
-    }
+    "owner": "lausuarez02"
   }
 }
