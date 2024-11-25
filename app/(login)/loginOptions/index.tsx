@@ -1,41 +1,33 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
-import { useAppKit, useWalletInfo } from '@reown/appkit-wagmi-react-native'
+import { useAppKit, useWalletInfo } from '@reown/appkit-wagmi-react-native';
 import { useAccount } from 'wagmi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 
 const LoginScreenOptions = () => {
-    const { address } = useAccount(); // Directly destructuring address from useAccount
-    const [mpcWallet, setMpcWallet] = useState('')
+  const { address } = useAccount();
+  const { open } = useAppKit();
 
-  const handleGoogleLogin = () => {
-    // Logic for Google login
+  const handleGoogleLogin = async () => {
     console.log('Continue with Google');
   };
-  const handleEmailLogin = () => {
-    // Logic for Email login
+
+  const handleWalletLogin = async () => {
+    await open({ view: 'Account' });
+  };
+
+  const handleEmailLogin = async () => {
     console.log('Continue with Email');
   };
 
   useEffect(() => {
     if(address){
-        router.replace('/(home)');
-        AsyncStorage.setItem('walletAddress', address );    
+      router.replace('/(home)');
+      AsyncStorage.setItem('walletAddress', address);    
     }
-  },[address])
-    const { open, close } = useAppKit()
+  },[address]);
 
-  // Trigger wallet login
-  const handleWalletLogin = async () => {
-    try {
-    //   close(); 
-      // await AppKit.connectWallet();
-      await open({ view: 'Account' });
-    } catch (error) {
-      console.error("Wallet connection failed:", error);
-    }
-  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topSection}>

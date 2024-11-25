@@ -17,11 +17,11 @@ const assistants = [
   },
   {
     id: '2',
-    name: 'Alex',
-    description: 'CCIP in avalanche',
-    price: '$2',
-    backgroundColor: '#D66E70', // orange
-    image: require('../assets/images/avalanche.png'), // Replace with actual image URL
+    name: 'Investor',
+    description: 'Investor Assistant',
+    price: '$500',
+    backgroundColor: '#DD10CF', // orange
+    image: require('../assets/images/lachain.png'), // Replace with actual image URL
     assistantId:1
   },
   {
@@ -44,6 +44,7 @@ const AssistantCard = ({ assistant, index,isFirst, isLast }:any) => (
       isLast && styles.bottomCard, // Apply rounded bottom corners to last card
       // Offset each card slightly
     ]}
+    onPress={() => router.push(`/chat?assistantId=${assistant.assistantId}`)}
   >
     {assistant.image ?     <Image source={assistant.image } style={styles.image} />
  : <StackedImages/>}
@@ -62,7 +63,6 @@ const AssistantCardContainer = () => {
        <ThemedText lightColor='#4D49FC' style={styles.subTitle} type="title">Asistentes</ThemedText>
       <View style={styles.cardStack}>
         {assistants.map((item, index) => (
-          <TouchableOpacity onPress={() => router.push(`/chat?assistantId=${item.assistantId}`)}>
           <AssistantCard 
             key={item.id} 
             assistant={item} 
@@ -70,7 +70,6 @@ const AssistantCardContainer = () => {
             isFirst={index === 0} 
             isLast={index === assistants.length - 1} 
           />
-          </TouchableOpacity>
         ))}
       </View>
     </View>

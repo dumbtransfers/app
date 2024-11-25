@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchBar from '@/components/SearchBar';
 
 const agents = [
-    {img:require('../../../assets/images/chat-bot.webp') ,name:"Lachain", description: "Help users buy on LaChain", backgroundColor: "#DD10CF"},
+    {img:require('../../../assets/images/lachain.png') ,name:"Lachain", description: "Help users buy on LaChain", backgroundColor: "#DD10CF"},
     {img:require('../../../assets/images/chat-bot.webp') ,name:"Friends", description: "Group generator for expenses divider", backgroundColor: "#FFF4B3", color:"black"},
 ]
 const MarketplaceScreen = () => {
