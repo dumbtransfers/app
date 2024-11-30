@@ -45,21 +45,6 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('walletAddress');
-      setIsAuthenticated(!!token);
-      console.log(isAuthenticated, token)
-      if (!token) {
-        router.replace('/(login)');
-      }
-    };
-
-    checkAuth();
-  }, []);
 
   useEffect(() => {
     if (loaded) {
@@ -76,14 +61,13 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack
-                  screenOptions={{
-                    headerShown: false,
-                  }}
+            screenOptions={{
+              headerShown: false,
+            }}
           >
-            <Stack.Screen
-              name={isAuthenticated ? '(home)' : '(login)'}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(home)" options={{ headerShown: false }} />
+            <Stack.Screen name="(login)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
           <AppKit />

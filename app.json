@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "WAPU",
+    "name": "dumbtransfers-app",
+    "scheme": "wapu",
     "slug": "wapu",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -20,12 +20,16 @@
           "safe",
           "rainbow",
           "uniswap"
-        ]
+        ],
+        "UIBackgroundModes": ["remote-notification"]
       },
       "supportsTablet": true,
       "bundleIdentifier": "com.lausuarez02.dumbtransfers-app",
       "runtimeVersion": "1.0.0",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -52,6 +56,7 @@
       "router": {
         "origin": false
       },
+    
       "eas": {
         "projectId": "2f33e73a-89f9-4695-be4d-6e60835021de"
       }

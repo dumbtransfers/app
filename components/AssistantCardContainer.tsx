@@ -21,7 +21,7 @@ const assistants = [
     description: 'Investor Assistant',
     price: '$500',
     backgroundColor: '#DD10CF', // orange
-    image: require('../assets/images/lachain.png'), // Replace with actual image URL
+    image: require('../assets/images/chill-dark-investor.png'), // Replace with actual image URL
     assistantId:1
   },
   {

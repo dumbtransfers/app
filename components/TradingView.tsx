@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Dimensions, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Dimensions, Image, TextInput, ActivityIndicator } from 'react-native';
 import { X } from 'lucide-react-native';
 
 const { height } = Dimensions.get('window');
@@ -19,15 +19,17 @@ interface TradingViewProps {
     };
     network: string;
   };
-  onAddLiquidity: (liquidity: { avaxAmount: string, usdcAmount: string }) => void;
+  onAddLiquidity: () => Promise<boolean>;
   onClose: () => void;
   visible: boolean;
 }
+
 
 export const TradingView: React.FC<TradingViewProps> = ({ data, onAddLiquidity, onClose, visible }) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [avaxAmount, setAvaxAmount] = useState(data?.metadata.expected_position.avax.toString() || '');
   const [usdcAmount, setUsdcAmount] = useState(data?.metadata.expected_position.usdc.toString() || '');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -45,6 +47,15 @@ export const TradingView: React.FC<TradingViewProps> = ({ data, onAddLiquidity, 
       }).start();
     }
   }, [visible]);
+
+  const handleAddLiquidity = async () => {
+    setIsLoading(true);
+    try {
+      await onAddLiquidity();
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (!visible) return null;
   
@@ -152,12 +163,24 @@ export const TradingView: React.FC<TradingViewProps> = ({ data, onAddLiquidity, 
         </View>
 
         <TouchableOpacity 
-          style={styles.button} 
-          onPress={() => onAddLiquidity({ avaxAmount, usdcAmount })}
+          style={[styles.button, isLoading && styles.buttonDisabled]} 
+          onPress={handleAddLiquidity}
+          disabled={isLoading}
         >
-          <Text style={styles.buttonText}>Add Liquidity</Text>
+          <Text style={styles.buttonText}>
+            {isLoading ? 'Adding Liquidity...' : 'Add Liquidity'}
+          </Text>
         </TouchableOpacity>
       </Animated.View>
+
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#2C40F0" />
+          <Text style={[styles.loadingText, { marginTop: 20 }]}>
+            Adding Liquidity...
+          </Text>
+        </View>
+      )}
     </Animated.View>
   );
 };
@@ -319,5 +342,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 8,
+  },
+  buttonDisabled: {
+    opacity: 0.7,
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1100,
+  },
+  loadingText: {
+    color: '#2C40F0',
+    fontSize: 16,
+    fontWeight: '500',
   },
 }); 
